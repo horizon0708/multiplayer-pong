@@ -1,0 +1,27 @@
+{
+  "name": "multiplayer-pong",
+  "version": "1.0.0",
+  "description": "A multiplayer pong, with authoritative server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "pong",
+    "game",
+    "multiplayer"
+  ],
+  "author": "James Kim",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.47",
+    "fork-ts-checker-webpack-plugin": "^0.2.8",
+    "happypack": "^4.0.0",
+    "webpack": "^3.8.1"
+  }
+}
