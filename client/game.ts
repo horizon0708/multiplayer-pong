@@ -5,21 +5,31 @@ import * as physics from "../core/physics";
 import * as io from 'socket.io-client';
 import GameData from "../server/model/gameData";
 import Entity from "../core/entity";
+import * as gameProperties from '../core/gameProperties';
+import EntityInterpolation from "./entityInterpolation";
 
 const renderer = new render();
 let gameState = <Entity[]>[new Ball('ball', 'ball', new Vector(100,100), new Vector(1,1))];
 let gameStarted = false;
-const enableInterpolation = false;
+const enableInterpolation = true;
+const enableServer = true;
 
 const socket = io();
+const Interpolator = new EntityInterpolation();
 
+let lastServerUpdateTimestamp = 0;
+let previousServerUpdateTimestamp = 0;
+let lastDrawTimestamp = 0;
+let clientTimeElapsed = 0;
+
+let gameUpdateQueue = [];
 let serverUpdates = [];
 let interpolated = [];
 
 // Interpolation setting
 const serverTick = 20;
 const clientTick = 60;
-const difference = Math.floor(clientTick  /serverTick);
+//const difference = Math.floor(clientTick  /serverTick);
 //const difference = 10;
 var fpsDisplay = document.getElementById('fpsDisplay');
 var fps = 60,
@@ -70,16 +80,15 @@ function keyUpHandler(e) {
 ;(function () {
     function main(timestamp) {
         window.requestAnimationFrame( main );
-        if(enableInterpolation){
-            if(interpolated.length > 100){
-                renderer.render(interpolated[90]);
-                if(interpolated.length > queueLimit * clientTick){
-                    interpolated.shift();
-                }
-            }
-        } else {
+        if (!enableServer){
             physics.update(gameState);
             renderer.render(gameState);
+        }
+        else if(enableInterpolation){
+            updateGameQueue(Interpolator.interpolate(serverUpdates));
+            renderer.render(gameUpdateQueue[gameUpdateQueue.length-1]);
+        } else {
+            renderer.render(serverUpdates[0].et)
         }
 
         if (timestamp > lastFpsUpdate + 1000) { // update every second
@@ -103,28 +112,17 @@ function onSocketConnect(): void {
 }
 
 function onServerUpdate(data: GameData): void {
-    serverUpdates.push(data);
-    if(serverUpdates.length > 1){
-        const newGameState = serverUpdates[serverUpdates.length - 1];
-        const oldGameState = serverUpdates[serverUpdates.length - 2];
-        for(let i=0; i < difference; i++){
-            const oldBall = <Ball>oldGameState.et[0];
-            const oldBallTime = <number>oldGameState.ts;
-            const newBall = <Ball>newGameState.et[0];
-            const newBallTime = <number>newGameState.ts;
-            const InterpX = oldBall.position.x + (newBall.position.x - oldBall.position.x) / difference * i;
-            const InterpY = oldBall.position.y + (newBall.position.y - oldBall.position.y) / difference * i;
-
-            const interpPos = new Vector(InterpX, InterpY);
-            const interpBall = new Ball(newBall.id, newBall.name, interpPos, newBall.direction);
-            const interpGameState = [interpBall];
-            if(enableInterpolation){
-                interpolated.push(interpGameState);
-            }
-        }
-    }
-    if(serverUpdates.length > queueLimit){
+    const timestamped = {...data, ts: performance.now()}
+    serverUpdates.push(timestamped);
+    if(serverUpdates.length >= 3){
         serverUpdates.shift();
     }
-
 }
+
+function updateGameQueue(entities: Entity[]){
+    gameUpdateQueue.push(entities);
+    if(gameUpdateQueue.length > 10){
+        gameUpdateQueue.shift();
+    }
+}
+

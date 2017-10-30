@@ -9,6 +9,7 @@ export function main(): void{
         if (err) {
             return console.log(err)
         }
+        console.log("test");
         return console.log(`server is listening on ${port}`)
     });
 

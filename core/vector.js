@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Vector = (function () {
+var Vector = /** @class */ (function () {
     function Vector(x, y) {
         if (x === void 0) { x = 0; }
         if (y === void 0) { y = 0; }

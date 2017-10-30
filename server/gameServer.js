@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var gameSimulation_1 = require("./gameSimulation");
 var socketIo = require("socket.io");
 var gameData_1 = require("./model/gameData");
-var GameServer = (function () {
+var gameProperties = require("../core/gameProperties");
+var GameServer = /** @class */ (function () {
     function GameServer(server) {
         this.players = [];
         this.server = server;
@@ -33,7 +34,7 @@ var GameServer = (function () {
     };
     GameServer.prototype.send = function () {
         var _this = this;
-        this.updateLoop = setInterval(function () { return _this.sendGameData(); }, 1000 / 20);
+        this.updateLoop = setInterval(function () { return _this.sendGameData(); }, gameProperties.serverTimestep);
     };
     GameServer.prototype.sendGameData = function () {
         this.io.emit('up', new gameData_1.default(this.simulation.gameState));

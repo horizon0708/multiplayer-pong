@@ -1,1 +1,1 @@
-{"version":3,"file":"gameProperties.js","sourceRoot":"","sources":["gameProperties.ts"],"names":[],"mappings":";;AAAa,QAAA,UAAU,GAAG,CAAC,CAAC;AACf,QAAA,SAAS,GAAG,GAAG,CAAC;AAChB,QAAA,UAAU,GAAG,GAAG,CAAC"}
+{"version":3,"file":"gameProperties.js","sourceRoot":"","sources":["gameProperties.ts"],"names":[],"mappings":";;AAAa,QAAA,UAAU,GAAG,CAAC,CAAC;AACf,QAAA,SAAS,GAAG,GAAG,CAAC;AAChB,QAAA,UAAU,GAAG,GAAG,CAAC;AACjB,QAAA,eAAe,GAAG,IAAI,GAAG,EAAE,CAAC;AAC5B,QAAA,cAAc,GAAG,IAAI,GAAG,EAAE,CAAC"}

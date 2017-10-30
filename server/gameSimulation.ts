@@ -20,7 +20,7 @@ export default class GameSimulation {
     public gameState: Entity[];
 
     public start(){
-        this.physicsLoop = setInterval(()=>this.update(this.gameState), GameProperties.physicsTimestep); // 60 tick
+        this.physicsLoop = setInterval(()=>this.update(this.gameState), GameProperties.serverTimestep); // 60 tick
     }
 
     private update(state: Entity[]){
@@ -29,7 +29,7 @@ export default class GameSimulation {
         // this.deltaTime += timestamp - this.lastFrameTimeMs; // get the delta time since last frame
         // this.lastFrameTimeMs = timestamp;
         // while (this.deltaTime >= GameProperties.physicsTimestep) {
-        //     this.deltaTime -= GameProperties.physicsTimestep;
+        //      this.deltaTime -= GameProperties.physicsTimestep;
         // }
     }
 

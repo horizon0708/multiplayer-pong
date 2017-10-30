@@ -9,16 +9,10 @@ function main() {
         if (err) {
             return console.log(err);
         }
+        console.log("test");
         return console.log("server is listening on " + port);
     });
     var gameServer = new gameServer_1.default(server);
-    // const io = require('socket.io')(server,{});
-    //
-    // // listen for a connection request from any client
-    // io.sockets.on('connection', function(socket){
-    //     console.log("socket connected: " + socket.id);
-    //     //output a unique socket.id
-    // });
 }
 exports.main = main;
 //# sourceMappingURL=index.js.map

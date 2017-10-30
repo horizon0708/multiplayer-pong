@@ -7,7 +7,7 @@ export default class Ball implements Entity{
         this.name = name;
         this.position = position;
         this.direction = direction;
-        this.speed = 2.4;
+        this.speed = 10;
     }
     id: string;
     name: string;

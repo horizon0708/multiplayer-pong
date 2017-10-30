@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -460,7 +460,7 @@ Emitter.prototype.hasListeners = function(event){
  */
 
 var keys = __webpack_require__(37);
-var hasBinary = __webpack_require__(11);
+var hasBinary = __webpack_require__(13);
 var sliceBuffer = __webpack_require__(38);
 var after = __webpack_require__(39);
 var utf8 = __webpack_require__(40);
@@ -1123,6 +1123,20 @@ module.exports = function(a, b){
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ballRadius = 5;
+exports.gameWidth = 660;
+exports.gameHeight = 440;
+exports.physicsTimestep = 1000 / 60;
+exports.serverTimestep = 1000 / 10;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 
 /**
  * Module dependencies.
@@ -1130,9 +1144,9 @@ module.exports = function(a, b){
 
 var debug = __webpack_require__(1)('socket.io-parser');
 var Emitter = __webpack_require__(2);
-var hasBin = __webpack_require__(11);
+var hasBin = __webpack_require__(13);
 var binary = __webpack_require__(32);
-var isBuf = __webpack_require__(13);
+var isBuf = __webpack_require__(15);
 
 /**
  * Protocol version.
@@ -1526,7 +1540,7 @@ function error() {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
@@ -1570,7 +1584,7 @@ module.exports = function (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -1733,20 +1747,46 @@ Transport.prototype.onClose = function () {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ballRadius = 5;
-exports.gameWidth = 660;
-exports.gameHeight = 440;
-exports.physicsTimestep = 1000 / 60;
+var Ball = /** @class */ (function () {
+    function Ball(id, name, position, direction) {
+        this.id = id;
+        this.name = name;
+        this.position = position;
+        this.direction = direction;
+        this.speed = 10;
+    }
+    return Ball;
+}());
+exports.default = Ball;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Vector = /** @class */ (function () {
+    function Vector(x, y) {
+        if (x === void 0) { x = 0; }
+        if (y === void 0) { y = 0; }
+        this.x = x;
+        this.y = y;
+    }
+    return Vector;
+}());
+exports.default = Vector;
+
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports) {
 
 /**
@@ -1791,7 +1831,7 @@ module.exports = function parseuri(str) {
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* global Blob File */
@@ -1800,7 +1840,7 @@ module.exports = function parseuri(str) {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(12);
+var isArray = __webpack_require__(14);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -1860,7 +1900,7 @@ function hasBinary (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -1871,7 +1911,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -1891,7 +1931,7 @@ function isBuf(obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1900,13 +1940,13 @@ function isBuf(obj) {
  */
 
 var eio = __webpack_require__(33);
-var Socket = __webpack_require__(19);
+var Socket = __webpack_require__(21);
 var Emitter = __webpack_require__(2);
-var parser = __webpack_require__(6);
-var on = __webpack_require__(20);
-var bind = __webpack_require__(21);
+var parser = __webpack_require__(7);
+var on = __webpack_require__(22);
+var bind = __webpack_require__(23);
 var debug = __webpack_require__(1)('socket.io-client:manager');
-var indexOf = __webpack_require__(18);
+var indexOf = __webpack_require__(20);
 var Backoff = __webpack_require__(48);
 
 /**
@@ -2470,14 +2510,14 @@ Manager.prototype.onreconnect = function () {
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies
  */
 
-var XMLHttpRequest = __webpack_require__(7);
+var XMLHttpRequest = __webpack_require__(8);
 var XHR = __webpack_require__(36);
 var JSONP = __webpack_require__(44);
 var websocket = __webpack_require__(45);
@@ -2530,18 +2570,18 @@ function polling (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(8);
+var Transport = __webpack_require__(9);
 var parseqs = __webpack_require__(4);
 var parser = __webpack_require__(3);
 var inherit = __webpack_require__(5);
-var yeast = __webpack_require__(17);
+var yeast = __webpack_require__(19);
 var debug = __webpack_require__(1)('engine.io-client:polling');
 
 /**
@@ -2555,7 +2595,7 @@ module.exports = Polling;
  */
 
 var hasXHR2 = (function () {
-  var XMLHttpRequest = __webpack_require__(7);
+  var XMLHttpRequest = __webpack_require__(8);
   var xhr = new XMLHttpRequest({ xdomain: false });
   return null != xhr.responseType;
 })();
@@ -2781,7 +2821,7 @@ Polling.prototype.uri = function () {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2856,7 +2896,7 @@ module.exports = yeast;
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 
@@ -2871,7 +2911,7 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -2879,11 +2919,11 @@ module.exports = function(arr, obj){
  * Module dependencies.
  */
 
-var parser = __webpack_require__(6);
+var parser = __webpack_require__(7);
 var Emitter = __webpack_require__(2);
 var toArray = __webpack_require__(47);
-var on = __webpack_require__(20);
-var bind = __webpack_require__(21);
+var on = __webpack_require__(22);
+var bind = __webpack_require__(23);
 var debug = __webpack_require__(1)('socket.io-client:socket');
 var parseqs = __webpack_require__(4);
 
@@ -3295,7 +3335,7 @@ Socket.prototype.compress = function (compress) {
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports) {
 
 
@@ -3325,7 +3365,7 @@ function on (obj, ev, fn) {
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 /**
@@ -3354,28 +3394,44 @@ module.exports = function(obj, fn){
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var renderer_1 = __webpack_require__(23);
-var ball_1 = __webpack_require__(24);
-var vector_1 = __webpack_require__(25);
+var renderer_1 = __webpack_require__(25);
+var ball_1 = __webpack_require__(10);
+var vector_1 = __webpack_require__(11);
 var physics = __webpack_require__(26);
 var io = __webpack_require__(27);
+var entityInterpolation_1 = __webpack_require__(49);
 var renderer = new renderer_1.default();
 var gameState = [new ball_1.default('ball', 'ball', new vector_1.default(100, 100), new vector_1.default(1, 1))];
 var gameStarted = false;
-var enableInterpolation = false;
+var enableInterpolation = true;
+var enableServer = true;
 var socket = io();
+var Interpolator = new entityInterpolation_1.default();
+var lastServerUpdateTimestamp = 0;
+var previousServerUpdateTimestamp = 0;
+var lastDrawTimestamp = 0;
+var clientTimeElapsed = 0;
+var gameUpdateQueue = [];
 var serverUpdates = [];
 var interpolated = [];
 // Interpolation setting
 var serverTick = 20;
 var clientTick = 60;
-var difference = Math.floor(clientTick / serverTick);
+//const difference = Math.floor(clientTick  /serverTick);
 //const difference = 10;
 var fpsDisplay = document.getElementById('fpsDisplay');
 var fps = 60, framesThisSecond = 0, lastFpsUpdate = 0;
@@ -3415,17 +3471,16 @@ function keyUpHandler(e) {
 (function () {
     function main(timestamp) {
         window.requestAnimationFrame(main);
-        if (enableInterpolation) {
-            if (interpolated.length > 100) {
-                renderer.render(interpolated[90]);
-                if (interpolated.length > queueLimit * clientTick) {
-                    interpolated.shift();
-                }
-            }
-        }
-        else {
+        if (!enableServer) {
             physics.update(gameState);
             renderer.render(gameState);
+        }
+        else if (enableInterpolation) {
+            updateGameQueue(Interpolator.interpolate(serverUpdates));
+            renderer.render(gameUpdateQueue[gameUpdateQueue.length - 1]);
+        }
+        else {
+            renderer.render(serverUpdates[0].et);
         }
         if (timestamp > lastFpsUpdate + 1000) {
             fps = 0.25 * framesThisSecond + (1 - 0.25) * fps; // compute the new FPS
@@ -3442,39 +3497,28 @@ function onSocketConnect() {
     console.log("connected to server");
 }
 function onServerUpdate(data) {
-    serverUpdates.push(data);
-    if (serverUpdates.length > 1) {
-        var newGameState = serverUpdates[serverUpdates.length - 1];
-        var oldGameState = serverUpdates[serverUpdates.length - 2];
-        for (var i = 0; i < difference; i++) {
-            var oldBall = oldGameState.et[0];
-            var oldBallTime = oldGameState.ts;
-            var newBall = newGameState.et[0];
-            var newBallTime = newGameState.ts;
-            var InterpX = oldBall.position.x + (newBall.position.x - oldBall.position.x) / difference * i;
-            var InterpY = oldBall.position.y + (newBall.position.y - oldBall.position.y) / difference * i;
-            var interpPos = new vector_1.default(InterpX, InterpY);
-            var interpBall = new ball_1.default(newBall.id, newBall.name, interpPos, newBall.direction);
-            var interpGameState = [interpBall];
-            if (enableInterpolation) {
-                interpolated.push(interpGameState);
-            }
-        }
-    }
-    if (serverUpdates.length > queueLimit) {
+    var timestamped = __assign({}, data, { ts: performance.now() });
+    serverUpdates.push(timestamped);
+    if (serverUpdates.length >= 3) {
         serverUpdates.shift();
+    }
+}
+function updateGameQueue(entities) {
+    gameUpdateQueue.push(entities);
+    if (gameUpdateQueue.length > 10) {
+        gameUpdateQueue.shift();
     }
 }
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var properties = __webpack_require__(9);
+var properties = __webpack_require__(6);
 var canvas = document.getElementById("game");
 var ctx = canvas.getContext("2d");
 var renderer = /** @class */ (function () {
@@ -3507,52 +3551,13 @@ exports.default = renderer;
 
 
 /***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Ball = /** @class */ (function () {
-    function Ball(id, name, position, direction) {
-        this.id = id;
-        this.name = name;
-        this.position = position;
-        this.direction = direction;
-        this.speed = 2.4;
-    }
-    return Ball;
-}());
-exports.default = Ball;
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Vector = /** @class */ (function () {
-    function Vector(x, y) {
-        if (x === void 0) { x = 0; }
-        if (y === void 0) { y = 0; }
-        this.x = x;
-        this.y = y;
-    }
-    return Vector;
-}());
-exports.default = Vector;
-
-
-/***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var gameProperties = __webpack_require__(9);
+var gameProperties = __webpack_require__(6);
 function update(entities) {
     ballBounceOffLeftAndRight(true, entities);
     ballBounceOffTopAndBottom(true, entities);
@@ -3597,8 +3602,8 @@ function ballBounceOffLeftAndRight(enabled, entities) {
  */
 
 var url = __webpack_require__(28);
-var parser = __webpack_require__(6);
-var Manager = __webpack_require__(14);
+var parser = __webpack_require__(7);
+var Manager = __webpack_require__(16);
 var debug = __webpack_require__(1)('socket.io-client');
 
 /**
@@ -3683,8 +3688,8 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(14);
-exports.Socket = __webpack_require__(19);
+exports.Manager = __webpack_require__(16);
+exports.Socket = __webpack_require__(21);
 
 
 /***/ }),
@@ -3696,7 +3701,7 @@ exports.Socket = __webpack_require__(19);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(10);
+var parseuri = __webpack_require__(12);
 var debug = __webpack_require__(1)('socket.io-client:url');
 
 /**
@@ -4335,8 +4340,8 @@ function plural(ms, n, name) {
  * Module requirements
  */
 
-var isArray = __webpack_require__(12);
-var isBuf = __webpack_require__(13);
+var isArray = __webpack_require__(14);
+var isBuf = __webpack_require__(15);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
@@ -4497,12 +4502,12 @@ module.exports.parser = __webpack_require__(3);
  * Module dependencies.
  */
 
-var transports = __webpack_require__(15);
+var transports = __webpack_require__(17);
 var Emitter = __webpack_require__(2);
 var debug = __webpack_require__(1)('engine.io-client:socket');
-var index = __webpack_require__(18);
+var index = __webpack_require__(20);
 var parser = __webpack_require__(3);
-var parseuri = __webpack_require__(10);
+var parseuri = __webpack_require__(12);
 var parseqs = __webpack_require__(4);
 
 /**
@@ -4636,8 +4641,8 @@ Socket.protocol = parser.protocol; // this is an int
  */
 
 Socket.Socket = Socket;
-Socket.Transport = __webpack_require__(8);
-Socket.transports = __webpack_require__(15);
+Socket.Transport = __webpack_require__(9);
+Socket.transports = __webpack_require__(17);
 Socket.parser = __webpack_require__(3);
 
 /**
@@ -5270,8 +5275,8 @@ try {
  * Module requirements.
  */
 
-var XMLHttpRequest = __webpack_require__(7);
-var Polling = __webpack_require__(16);
+var XMLHttpRequest = __webpack_require__(8);
+var Polling = __webpack_require__(18);
 var Emitter = __webpack_require__(2);
 var inherit = __webpack_require__(5);
 var debug = __webpack_require__(1)('engine.io-client:polling-xhr');
@@ -6250,7 +6255,7 @@ module.exports = (function() {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(16);
+var Polling = __webpack_require__(18);
 var inherit = __webpack_require__(5);
 
 /**
@@ -6487,11 +6492,11 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(8);
+var Transport = __webpack_require__(9);
 var parser = __webpack_require__(3);
 var parseqs = __webpack_require__(4);
 var inherit = __webpack_require__(5);
-var yeast = __webpack_require__(17);
+var yeast = __webpack_require__(19);
 var debug = __webpack_require__(1)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
@@ -6886,6 +6891,61 @@ Backoff.prototype.setJitter = function(jitter){
   this.jitter = jitter;
 };
 
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var vector_1 = __webpack_require__(11);
+var gameProperties = __webpack_require__(6);
+var ball_1 = __webpack_require__(10);
+var EntityInterpolation = /** @class */ (function () {
+    function EntityInterpolation() {
+        this.timeSinceLastServerUpdate = 0;
+    }
+    EntityInterpolation.prototype.resetTimeSinceLastServerUpdate = function () {
+        this.timeSinceLastServerUpdate = 0;
+    };
+    ;
+    EntityInterpolation.prototype.interpolate = function (serverUpdates) {
+        var output = [];
+        if (serverUpdates.length > 1) {
+            var newGameState = serverUpdates[serverUpdates.length - 1];
+            var oldGameState = serverUpdates[serverUpdates.length - 2];
+            this.timeSinceLastServerUpdate = performance.now() - newGameState.ts;
+            var lerpRatio = this.timeSinceLastServerUpdate / gameProperties.serverTimestep;
+            var _loop_1 = function (i) {
+                var oldEntity = oldGameState.et[i];
+                if (oldEntity.id === "ball") {
+                    var newEntity = newGameState.et.find(function (x) { return x.id === oldEntity.id; });
+                    var dx = newEntity.position.x - oldEntity.position.x;
+                    var dy = newEntity.position.y - oldEntity.position.y;
+                    var newPosition = new vector_1.default(oldEntity.position.x + dx * lerpRatio, oldEntity.position.y + dy * lerpRatio);
+                    var updatedEntity = new ball_1.default(newEntity.id, newEntity.name, newPosition, newEntity.direction);
+                    output.push(updatedEntity);
+                }
+                else if (oldEntity.id !== this_1.playerId) {
+                    // render other player
+                }
+                else {
+                    output.push(oldEntity);
+                }
+            };
+            var this_1 = this;
+            for (var i = 0; i < oldGameState.et.length; i++) {
+                _loop_1(i);
+            }
+            return output;
+        }
+        return [];
+    };
+    return EntityInterpolation;
+}());
+exports.default = EntityInterpolation;
 
 
 /***/ })

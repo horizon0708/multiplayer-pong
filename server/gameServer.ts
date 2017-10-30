@@ -2,6 +2,7 @@ import GameSimulation from "./gameSimulation";
 import * as socketIo from "socket.io";
 import GameData from "./model/gameData";
 import Entity from "../core/entity";
+import * as gameProperties from '../core/gameProperties';
 
 export default class GameServer {
    constructor(server){
@@ -39,7 +40,7 @@ export default class GameServer {
     }
 
     private send(): void {
-        this.updateLoop = setInterval(()=>this.sendGameData(), 1000/20);
+        this.updateLoop = setInterval(()=>this.sendGameData(), gameProperties.serverTimestep);
     }
 
     private sendGameData(): void {
@@ -48,6 +49,5 @@ export default class GameServer {
 
     private debug(): void {
         setInterval(()=>console.log(this.simulation.gameState), 2000);
-
     }
 }

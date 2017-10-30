@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var GameData = (function () {
+var GameData = /** @class */ (function () {
     function GameData(entities) {
         this.ts = Date.now();
         this.et = entities;

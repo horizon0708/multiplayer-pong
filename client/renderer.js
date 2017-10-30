@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var properties = require("../core/gameProperties");
 var canvas = document.getElementById("game");
 var ctx = canvas.getContext("2d");
-var renderer = (function () {
+var renderer = /** @class */ (function () {
     function renderer() {
     }
     renderer.prototype.render = function (entities) {
