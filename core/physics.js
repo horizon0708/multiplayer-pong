@@ -15,6 +15,7 @@ function ballMovement(entities) {
     ball.position.x += ball.direction.x * ball.speed;
     ball.position.y += ball.direction.y * ball.speed;
 }
+exports.ballMovement = ballMovement;
 function ballBounceOffTopAndBottom(enabled, entities) {
     if (enabled) {
         var ball = entities.find(function (x) { return x.id === "ball"; });
@@ -24,6 +25,7 @@ function ballBounceOffTopAndBottom(enabled, entities) {
         }
     }
 }
+exports.ballBounceOffTopAndBottom = ballBounceOffTopAndBottom;
 function ballBounceOffLeftAndRight(enabled, entities) {
     if (enabled) {
         var ball = entities.find(function (x) { return x.id === "ball"; });
@@ -33,4 +35,19 @@ function ballBounceOffLeftAndRight(enabled, entities) {
         }
     }
 }
+exports.ballBounceOffLeftAndRight = ballBounceOffLeftAndRight;
+function PaddleMovement(paddleData, entities) {
+    var player = entities.find(function (x) { return x.id === paddleData.id; });
+    var goingUp = paddleData.up;
+    if (player) {
+        if (goingUp) {
+            player.position.y += player.speed;
+        }
+        else {
+            player.position.y -= player.speed;
+        }
+    }
+    return entities;
+}
+exports.PaddleMovement = PaddleMovement;
 //# sourceMappingURL=physics.js.map

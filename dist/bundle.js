@@ -3415,24 +3415,17 @@ var physics = __webpack_require__(26);
 var io = __webpack_require__(27);
 var entityInterpolation_1 = __webpack_require__(49);
 var renderer = new renderer_1.default();
-var gameState = [new ball_1.default('ball', 'ball', new vector_1.default(100, 100), new vector_1.default(1, 1))];
+var interpolation = new entityInterpolation_1.default();
+var playerId;
+var gameState = [
+    new ball_1.default('ball', 'ball', new vector_1.default(100, 100), new vector_1.default(1, 1))
+];
 var gameStarted = false;
 var enableInterpolation = true;
 var enableServer = true;
 var socket = io();
-var Interpolator = new entityInterpolation_1.default();
-var lastServerUpdateTimestamp = 0;
-var previousServerUpdateTimestamp = 0;
-var lastDrawTimestamp = 0;
-var clientTimeElapsed = 0;
 var gameUpdateQueue = [];
 var serverUpdates = [];
-var interpolated = [];
-// Interpolation setting
-var serverTick = 20;
-var clientTick = 60;
-//const difference = Math.floor(clientTick  /serverTick);
-//const difference = 10;
 var fpsDisplay = document.getElementById('fpsDisplay');
 var fps = 60, framesThisSecond = 0, lastFpsUpdate = 0;
 //tick
@@ -3441,6 +3434,10 @@ var queueLimit = 3;
 socket.on("connect", function (data) { return onSocketConnect(); });
 socket.on("up", function (data) {
     onServerUpdate(data);
+});
+socket.on("id", function (data) {
+    console.log(data);
+    playerId = data;
 });
 var upPressed = false;
 var downPressed = false;
@@ -3471,12 +3468,19 @@ function keyUpHandler(e) {
 (function () {
     function main(timestamp) {
         window.requestAnimationFrame(main);
+        //Input
+        if (upPressed) {
+            console.log("going up");
+        }
+        else if (downPressed) {
+            console.log("going down");
+        }
         if (!enableServer) {
             physics.update(gameState);
             renderer.render(gameState);
         }
         else if (enableInterpolation) {
-            updateGameQueue(Interpolator.interpolate(serverUpdates));
+            updateGameQueue(interpolation.interpolate(serverUpdates));
             renderer.render(gameUpdateQueue[gameUpdateQueue.length - 1]);
         }
         else {
@@ -3587,6 +3591,17 @@ function ballBounceOffLeftAndRight(enabled, entities) {
         if (ball.position.x + ball.direction.x * ball.speed > gameProperties.gameWidth - gameProperties.ballRadius
             || ball.position.x + ball.direction.x * ball.speed < gameProperties.ballRadius) {
             ball.direction.x = -ball.direction.x;
+        }
+    }
+}
+function PaddleMovement(goingUp, entities, playerId) {
+    var player = entities.find(function (x) { return x.id === playerId; });
+    if (player) {
+        if (goingUp) {
+            player.position.y += player.speed;
+        }
+        else {
+            player.position.y -= player.speed;
         }
     }
 }

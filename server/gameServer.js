@@ -4,6 +4,8 @@ var gameSimulation_1 = require("./gameSimulation");
 var socketIo = require("socket.io");
 var gameData_1 = require("./model/gameData");
 var gameProperties = require("../core/gameProperties");
+var gameInputHandler = require("./gameInputHandler");
+var InputQueue_1 = require("./model/InputQueue");
 var GameServer = /** @class */ (function () {
     function GameServer(server) {
         this.players = [];
@@ -18,7 +20,10 @@ var GameServer = /** @class */ (function () {
         var _this = this;
         this.io.on('connection', function (socket) {
             console.log("socket connected: " + socket.id);
+            socket.emit("id", socket.id);
+            _this.simulation.assignPlayer(socket.id);
             _this.players.push(socket);
+            _this.inputQueues.push(new InputQueue_1.default(socket.id));
             socket.on('disconnect', function () {
                 console.log('Got disconnect!');
                 var i = _this.players.indexOf(socket);
@@ -29,6 +34,18 @@ var GameServer = /** @class */ (function () {
             socket.on('gameStart', function (socket) {
                 console.log('game start');
                 _this.simulation.start();
+            });
+            socket.on('move', function (data) {
+                // find the player's inputQueue
+                var playerQueue = _this.inputQueues.find(function (x) { return x.playerId === data.id; });
+                if (playerQueue) {
+                    var processedMovement = gameInputHandler.validate(data, playerQueue);
+                    // if the movement is valid, add to InputQueue and tell the client that it was accepted
+                    if (processedMovement.ack) {
+                        playerQueue.Add(processedMovement);
+                        socket.emit('moveOk', processedMovement.ts);
+                    }
+                }
             });
         });
     };

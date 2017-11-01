@@ -4,8 +4,14 @@ import * as Physics from '../core/physics';
 import Entity from "../core/entity";
 import * as GameProperties from '../core/gameProperties';
 import {physicsTimestep} from "../core/gameProperties";
+import Paddle from "../core/paddle";
+import Queue from "./model/Queue";
+import PaddleData from "../core/model/PaddleData";
 
-const gameEntities = [new Ball('ball', 'ball', new Vector(100,100), new Vector(1,1))];
+const gameEntities = [
+    new Ball('ball', 'ball', new Vector(100,100), new Vector(1,1)),
+    new Paddle('unassigned', 'paddle', new Vector(60, 150))
+];
 
 export default class GameSimulation {
     constructor(){
@@ -19,11 +25,15 @@ export default class GameSimulation {
     private physicsLoop: any;
     public gameState: Entity[];
 
-    public start(){
-        this.physicsLoop = setInterval(()=>this.update(this.gameState), GameProperties.serverTimestep); // 60 tick
+    public start(InputQueue: Queue){
+        this.physicsLoop = setInterval(()=>this.serverUpdate(this.gameState), GameProperties.physicsTimestep); // 10 tick
     }
 
-    private update(state: Entity[]){
+    private serverUpdate(state: Entity[],){
+        // go through and apply all inputs
+
+
+        // handle phyics ( ball movements, collision )
         Physics.update(state);
 
         // this.deltaTime += timestamp - this.lastFrameTimeMs; // get the delta time since last frame
@@ -33,9 +43,18 @@ export default class GameSimulation {
         // }
     }
 
+    public assignPlayer(playerId){
+        const index = gameEntities.findIndex(x => x.id === 'unassigned');
+        if(index > 0){
+            gameEntities[index].id = playerId;
+        }
+    }
+
     public stop(){
         clearInterval(this.physicsLoop);
         this.gameState = gameEntities;
     }
+
+
 }
 

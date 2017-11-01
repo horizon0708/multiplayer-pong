@@ -4,24 +4,36 @@ var ball_1 = require("../core/ball");
 var vector_1 = require("../core/vector");
 var Physics = require("../core/physics");
 var GameProperties = require("../core/gameProperties");
-var gameEntities = [new ball_1.default('ball', 'ball', new vector_1.default(100, 100), new vector_1.default(1, 1))];
+var paddle_1 = require("../core/paddle");
+var gameEntities = [
+    new ball_1.default('ball', 'ball', new vector_1.default(100, 100), new vector_1.default(1, 1)),
+    new paddle_1.default('unassigned', 'paddle', new vector_1.default(60, 150))
+];
 var GameSimulation = /** @class */ (function () {
     function GameSimulation() {
         this.gameState = gameEntities;
         this.deltaTime = 0;
         this.lastFrameTimeMs = 0;
     }
-    GameSimulation.prototype.start = function () {
+    GameSimulation.prototype.start = function (InputQueue) {
         var _this = this;
-        this.physicsLoop = setInterval(function () { return _this.update(_this.gameState); }, GameProperties.serverTimestep); // 60 tick
+        this.physicsLoop = setInterval(function () { return _this.serverUpdate(_this.gameState); }, GameProperties.physicsTimestep); // 10 tick
     };
-    GameSimulation.prototype.update = function (state) {
+    GameSimulation.prototype.serverUpdate = function (state) {
+        // go through and apply all inputs
+        // handle phyics ( ball movements, collision )
         Physics.update(state);
         // this.deltaTime += timestamp - this.lastFrameTimeMs; // get the delta time since last frame
         // this.lastFrameTimeMs = timestamp;
         // while (this.deltaTime >= GameProperties.physicsTimestep) {
         //      this.deltaTime -= GameProperties.physicsTimestep;
         // }
+    };
+    GameSimulation.prototype.assignPlayer = function (playerId) {
+        var index = gameEntities.findIndex(function (x) { return x.id === 'unassigned'; });
+        if (index > 0) {
+            gameEntities[index].id = playerId;
+        }
     };
     GameSimulation.prototype.stop = function () {
         clearInterval(this.physicsLoop);

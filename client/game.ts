@@ -1,4 +1,4 @@
-import render from './renderer';
+import Render from './renderer';
 import Ball from '../core/ball';
 import Vector from '../core/vector';
 import * as physics from "../core/physics";
@@ -8,29 +8,22 @@ import Entity from "../core/entity";
 import * as gameProperties from '../core/gameProperties';
 import EntityInterpolation from "./entityInterpolation";
 
-const renderer = new render();
-let gameState = <Entity[]>[new Ball('ball', 'ball', new Vector(100,100), new Vector(1,1))];
+const renderer = new Render();
+const interpolation = new EntityInterpolation();
+let playerId;
+
+let gameState = <Entity[]>[
+    new Ball('ball', 'ball', new Vector(100,100), new Vector(1,1))];
 let gameStarted = false;
 const enableInterpolation = true;
 const enableServer = true;
 
 const socket = io();
-const Interpolator = new EntityInterpolation();
-
-let lastServerUpdateTimestamp = 0;
-let previousServerUpdateTimestamp = 0;
-let lastDrawTimestamp = 0;
-let clientTimeElapsed = 0;
 
 let gameUpdateQueue = [];
 let serverUpdates = [];
-let interpolated = [];
 
-// Interpolation setting
-const serverTick = 20;
-const clientTick = 60;
-//const difference = Math.floor(clientTick  /serverTick);
-//const difference = 10;
+
 var fpsDisplay = document.getElementById('fpsDisplay');
 var fps = 60,
     framesThisSecond = 0,
@@ -44,6 +37,10 @@ const queueLimit = 3;
 socket.on("connect", data=>onSocketConnect());
 socket.on("up", data=>{
     onServerUpdate(data);
+});
+socket.on("id", data=>{
+   console.log(data);
+   playerId = data;
 });
 
 
@@ -75,17 +72,22 @@ function keyUpHandler(e) {
     }
 }
 
-
-
 ;(function () {
     function main(timestamp) {
         window.requestAnimationFrame( main );
+        //Input
+        if(upPressed){
+            console.log("going up");
+        } else if ( downPressed){
+            console.log("going down");
+        }
+
         if (!enableServer){
             physics.update(gameState);
             renderer.render(gameState);
         }
         else if(enableInterpolation){
-            updateGameQueue(Interpolator.interpolate(serverUpdates));
+            updateGameQueue(interpolation.interpolate(serverUpdates));
             renderer.render(gameUpdateQueue[gameUpdateQueue.length-1]);
         } else {
             renderer.render(serverUpdates[0].et)
@@ -108,7 +110,6 @@ function keyUpHandler(e) {
 
 function onSocketConnect(): void {
     console.log("connected to server");
-
 }
 
 function onServerUpdate(data: GameData): void {
