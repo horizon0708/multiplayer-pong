@@ -38,9 +38,8 @@ function ballBounceOffLeftAndRight(enabled, entities) {
 exports.ballBounceOffLeftAndRight = ballBounceOffLeftAndRight;
 function PaddleMovement(paddleData, entities) {
     var player = entities.find(function (x) { return x.id === paddleData.id; });
-    var goingUp = paddleData.up;
     if (player) {
-        if (goingUp) {
+        if (paddleData.up) {
             player.position.y += player.speed;
         }
         else {

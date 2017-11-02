@@ -1,5 +1,5 @@
 import app from './app';
-import GameServer from "./gameServer";
+import GameServer from "./gameServer-old";
 
 const port = process.env.PORT || 2000;
 const server = require('http').Server(app);

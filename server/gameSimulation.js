@@ -15,7 +15,7 @@ var GameSimulation = /** @class */ (function () {
         this.deltaTime = 0;
         this.lastFrameTimeMs = 0;
     }
-    GameSimulation.prototype.start = function (InputQueue) {
+    GameSimulation.prototype.start = function () {
         var _this = this;
         this.physicsLoop = setInterval(function () { return _this.serverUpdate(_this.gameState); }, GameProperties.physicsTimestep); // 10 tick
     };

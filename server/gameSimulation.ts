@@ -25,7 +25,7 @@ export default class GameSimulation {
     private physicsLoop: any;
     public gameState: Entity[];
 
-    public start(InputQueue: Queue){
+    public start(){
         this.physicsLoop = setInterval(()=>this.serverUpdate(this.gameState), GameProperties.physicsTimestep); // 10 tick
     }
 

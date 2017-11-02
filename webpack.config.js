@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-    entry: './client/game.ts',
+    entry: './client/main.ts',
     context: __dirname,
     output: {
         filename: 'bundle.js',
