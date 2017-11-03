@@ -1,5 +1,9 @@
 import Client from "./client";
 import GameServer from "../server/gameServer";
+import ServerRenderer from "./serverRenderer";
 
-const clientOne = new Client();
-const server = new GameServer(true, [clientOne]);
+//const clientTwo = new Client("two");
+const server = new GameServer(true);
+const clientOne = new Client("one");
+const renderer = new ServerRenderer("server", server);
+

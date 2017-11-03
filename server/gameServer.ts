@@ -1,10 +1,9 @@
 import SimulatedCommHandlerServer from "./SimulatedCommHandler-server";
-import Client from "../client/client";
 import GameSimulation from "./gameSimulation";
 
 export default class GameServer{
-    constructor(simulated, private clients: Client[] = []){
-        this.simulator = new GameSimulation();
+    constructor(simulated){
+        this.simulator = new GameSimulation(this);
         this.simulated = simulated;
         this.startCommHandler();
         this.simulator.start();
@@ -13,7 +12,7 @@ export default class GameServer{
     public commHandler;
     public simulated;
     public simulator : GameSimulation;
-    public inputQueue
+    public inputQueue = [];
 
     private startCommHandler(){
         if(this.simulated){

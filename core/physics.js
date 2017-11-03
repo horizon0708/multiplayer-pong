@@ -36,10 +36,11 @@ function ballBounceOffLeftAndRight(enabled, entities) {
     }
 }
 exports.ballBounceOffLeftAndRight = ballBounceOffLeftAndRight;
-function PaddleMovement(paddleData, entities) {
-    var player = entities.find(function (x) { return x.id === paddleData.id; });
+function PaddleMovement(pData, entities) {
+    var playerId = Math.abs(pData) === 1 ? 'one' : 'two';
+    var player = entities.find(function (x) { return x.id === playerId; });
     if (player) {
-        if (paddleData.up) {
+        if (pData < 0) {
             player.position.y += player.speed;
         }
         else {

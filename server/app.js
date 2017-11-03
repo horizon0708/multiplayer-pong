@@ -6,7 +6,6 @@ var App = /** @class */ (function () {
     function App() {
         this.express = express();
         this.mountRoutes();
-        console.log("app");
     }
     App.prototype.mountRoutes = function () {
         this.express.get('/', function (req, res) {

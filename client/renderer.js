@@ -3,13 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var properties = require("../core/gameProperties");
 var entityInterpolation_1 = require("./entityInterpolation");
 var Renderer = /** @class */ (function () {
-    function Renderer(playerId, serverUpdates, clientInputs, enableInterp, enableClientPrediction) {
+    function Renderer(playerId, gameClient, serverUpdates, clientInputs, enableInterp, enableClientPrediction) {
+        this.interpolatedFrames = [];
         this.enableInterp = true;
         this.enableClientPrediction = false;
         this.fps = 60;
         this.framesThisSecond = 0;
         this.lastFpsUpdate = 0;
         this.playerId = playerId;
+        this.gameClient = gameClient;
         this.serverUpdates = serverUpdates;
         this.enableInterp = enableInterp;
         this.enableClientPrediction = enableClientPrediction;
@@ -21,7 +23,7 @@ var Renderer = /** @class */ (function () {
     }
     Renderer.prototype.startRender = function () {
         var _this = this;
-        requestAnimationFrame(function () { return _this.renderLoop(performance.now()); });
+        window.requestAnimationFrame(function () { return _this.renderLoop(performance.now()); });
     };
     Renderer.prototype.renderLoop = function (timestamp) {
         var _this = this;
@@ -31,23 +33,25 @@ var Renderer = /** @class */ (function () {
         }
         else if (this.enableInterp && !this.enableClientPrediction) {
             this.interpolate();
-            this.render(this.interpolatedFrames[this.interpolatedFrames.length - 1]);
+            if (this.interpolatedFrames.length > 0) {
+                this.render(this.interpolatedFrames[this.interpolatedFrames.length - 1]);
+            }
         }
         else if (!this.enableInterp && this.enableClientPrediction) {
             this.renderWithClientPrediction(this.clientPredictionFrames[this.clientPredictionFrames.length - 1], this.serverUpdates[this.serverUpdates.length - 1]);
         }
         else {
-            this.render(this.serverUpdates[this.serverUpdates.length - 1].et);
+            if (this.serverUpdates.length > 0) {
+                this.render(this.serverUpdates[this.serverUpdates.length - 1].et);
+            }
         }
         this.drawFPS(timestamp);
-        requestAnimationFrame(function () { return _this.renderLoop; });
+        window.requestAnimationFrame(function () { return _this.renderLoop(performance.now()); });
     };
     Renderer.prototype.drawEntity = function (name, position) {
         if (name === "paddle") {
-            this.ctx.beginPath();
-            this.ctx.arc(position.x, position.y, properties.ballRadius, 0, 360);
-            this.ctx.fill();
-            this.ctx.closePath();
+            //this.ctx.arc(position.x, position.y, properties.ballRadius, 0, 360);
+            this.ctx.fillRect(position.x, position.y, 10, 40);
         }
         if (name === "ball") {
             this.ctx.beginPath();

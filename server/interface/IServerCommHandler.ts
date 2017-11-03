@@ -1,4 +1,4 @@
 export default interface IServerCommHandler {
-    listen(e);
+    listen();
     send();
 }

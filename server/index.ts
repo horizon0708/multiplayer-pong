@@ -1,5 +1,5 @@
 import app from './app';
-import GameServer from "./gameServer-old";
+import Reflector from "./reflector";
 
 const port = process.env.PORT || 2000;
 const server = require('http').Server(app);
@@ -13,6 +13,6 @@ export function main(): void{
         return console.log(`server is listening on ${port}`)
     });
 
-    const gameServer = new GameServer(server);
+    const reflector = new Reflector(server);
 }
 

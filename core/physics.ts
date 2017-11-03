@@ -1,17 +1,14 @@
-import * as  gameProperties from './gameProperties';
-import Entity from "./entity";
-import Ball from "./ball";
-import Paddle from "./paddle";
-import PaddleData from "./model/PaddleData";
+import * as  gameProperties from './constants/gameProperties';
+import GameEntity from "./gameEntity";
 
-export function update(entities: Entity[]): void {
+export function update(entities: GameEntity[]): void {
     ballBounceOffLeftAndRight(true, entities);
     ballBounceOffTopAndBottom(true, entities);
     ballMovement(entities);
 }
 
-export function ballMovement(entities: Entity[]): void {
-    const ball = <Ball>entities.find(x=> x.id === "ball");
+export function ballMovement(entities: GameEntity[]): void {
+    const ball = entities.find(x=> x.id === "ball");
     if(!ball){
         return;
     }
@@ -19,9 +16,9 @@ export function ballMovement(entities: Entity[]): void {
     ball.position.y += ball.direction.y * ball.speed;
 }
 
-export function ballBounceOffTopAndBottom(enabled: boolean, entities: Entity[]){
+export function ballBounceOffTopAndBottom(enabled: boolean, entities: GameEntity[]){
     if(enabled){
-        const ball = <Ball>entities.find(x=> x.id === "ball");
+        const ball = entities.find(x=> x.id === "ball");
         if(ball.position.y + ball.direction.y * ball.speed  > gameProperties.gameHeight - gameProperties.ballRadius
             || ball.position.y + ball.direction.y * ball.speed  < gameProperties.ballRadius) {
             ball.direction.y = -ball.direction.y;
@@ -29,9 +26,9 @@ export function ballBounceOffTopAndBottom(enabled: boolean, entities: Entity[]){
     }
 }
 
-export function ballBounceOffLeftAndRight(enabled: boolean, entities: Entity[]){
+export function ballBounceOffLeftAndRight(enabled: boolean, entities: GameEntity[]){
     if(enabled){
-        const ball = <Ball>entities.find(x=> x.id === "ball");
+        const ball = entities.find(x=> x.id === "ball");
         if(ball.position.x + ball.direction.x * ball.speed > gameProperties.gameWidth - gameProperties.ballRadius
             || ball.position.x + ball.direction.x * ball.speed < gameProperties.ballRadius) {
             ball.direction.x = -ball.direction.x;
@@ -39,16 +36,30 @@ export function ballBounceOffLeftAndRight(enabled: boolean, entities: Entity[]){
     }
 }
 
-export function PaddleMovement(paddleData: PaddleData, entities: Entity[]) : Entity[]{
-    const player = <Paddle>entities.find(x => x.id === paddleData.id);
+export function PaddleMovement( pData: number, entities: GameEntity[]) : GameEntity[]{
+    const playerId = Math.abs(pData) === 1 ? 'one': 'two';
+    const player = entities.find(x => x.id === playerId);
     if(player) {
-        if (paddleData.up) {
+        if (pData < 0) {
             player.position.y += player.speed;
         } else {
             player.position.y -= player.speed;
         }
     }
     return entities;
+}
+
+export function SinglePaddleMovement( pData: number, entity: GameEntity) : GameEntity{
+    const playerId = Math.abs(pData) === 1 ? 'one': 'two';
+    const player = entity;
+    if(player) {
+        if (pData < 0) {
+            player.position.y += player.speed;
+        } else {
+            player.position.y -= player.speed;
+        }
+    }
+    return player;
 }
 
 

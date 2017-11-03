@@ -1,9 +1,9 @@
 import * as Physics from './physics';
-import * as GameProperties from './gameProperties';
+import * as GameProperties from './constants/gameProperties';
 import 'mocha';
 import PaddleData from "./model/PaddleData";
 import Paddle from "./paddle";
-import Vector from "./vector";
+import Vector from "./model/vector";
 
 const expect = require('chai').expect;
 const paddleData = new PaddleData('mockId', true, 1, true);

@@ -7,7 +7,6 @@ class App {
     constructor () {
         this.express = express();
         this.mountRoutes();
-        console.log("app");
     }
 
     private mountRoutes (): void {

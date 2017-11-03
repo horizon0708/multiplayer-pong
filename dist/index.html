@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <title>Multiplayer Pong</title>
     <style>
-        body {background: black }
-        canvas {background: white}
+        body {background: white }
+        canvas {}
     </style>
 </head>
 <body>
-    <p id="fpsDisplay" style="position: relative; color: white"> Fps </p>
-    <div>
-        <canvas id="game" width="660" height="440"></canvas>
+    <p id="fpsDisplay" style="position: relative; color: black"> Fps </p>
+    <div style="position: relative;">
+        <canvas id="one" width="660" height="440"
+                style="position: absolute; left: 0; top: 0; z-index: 2;"></canvas>
 
+        <canvas id="server" width="660" height="440"
+                style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
     </div>
     <script src="bundle.js"></script>
 

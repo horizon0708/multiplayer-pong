@@ -1,15 +1,19 @@
 import Renderer from "./renderer";
-import ICommHandler from "./interface/ICommHandler";
-import SimulatedCommHandlerClient from "./SimulatedCommHandler-client";
+import ClientNetworkHandler from "./clientNetworkHandler";
+import InputHandler from "./inputHandler";
 
 export default class Client {
-    constructor(){
-        this.renderer = new Renderer('one',this.serverUpdates, this.clientInputs, true, false);
+    constructor(public id:string = ''){
+        this.renderer = new Renderer('one',this,this.serverUpdates, this.clientInputs, true , false);
         this.renderer.startRender();
-        this.commHandler = new SimulatedCommHandlerClient(this.serverUpdates,this.clientInputs, );
+        this.commHandler = new ClientNetworkHandler(this);
+        this.inputHandler = new InputHandler(this);
     }
-    private serverUpdates;
-    private clientInputs;
-    private renderer: Renderer;
-    public commHandler: ICommHandler;
+    public serverUpdates = [];
+    public clientInputs = [];
+    public renderer: Renderer;
+    public commHandler: any;
+    public inputHandler: InputHandler;
+
+
 }
